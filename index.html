@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>Bir Sözün İzinde</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+:root{
+  --bg:#090909;--surface:#111;--surface2:#171717;
+  --text:#f5f5f7;--muted:#929292;--line:#292929;
+  --accent:#c8c8c8;--max:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:'DM Sans',Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+button,a{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+::selection{background:#ddd;color:#111}
+header{
+  position:sticky;top:0;z-index:20;
+  height:68px;background:rgba(9,9,9,.82);
+  backdrop-filter:blur(22px);border-bottom:1px solid rgba(255,255,255,.08);
+}
+.nav{
+  max-width:var(--max);height:100%;margin:auto;padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand{font-size:14px;font-weight:700;letter-spacing:-.4px}
+.brand span{color:#888;font-weight:400}
+.navlinks{display:flex;gap:28px;align-items:center}
+.navlinks button,.mobile-menu button{
+  border:0;background:none;color:#999;font-size:12px;
+  transition:.2s;padding:8px 0;
+}
+.navlinks button:hover,.navlinks button.active{color:white}
+.menu-btn{display:none;background:none;border:0;color:white;font-size:22px}
+main{min-height:calc(100vh - 140px)}
+.page{display:none;animation:appear .45s ease}
+.page.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.wrap{max-width:var(--max);margin:auto;padding:0 28px}
+.hero{
+  min-height:690px;display:flex;align-items:center;
+  position:relative;overflow:hidden;
+}
+.hero:before{
+  content:"";position:absolute;width:700px;height:500px;
+  left:50%;top:46%;transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse,rgba(255,255,255,.085),transparent 68%);
+  pointer-events:none;
+}
+.hero-content{position:relative;max-width:850px;padding:90px 0}
+.eyebrow{
+  color:#888;font-size:11px;letter-spacing:3px;
+  text-transform:uppercase;margin-bottom:28px;
+}
+.hero h1{
+  font-size:clamp(52px,8.5vw,108px);line-height:.99;
+  letter-spacing:-7px;font-weight:600;margin:0;
+}
+.hero h1 span{color:#777}
+.hero p{
+  color:#999;font-size:17px;line-height:1.8;
+  max-width:490px;margin:32px 0 34px;
+}
+.primary{
+  background:#f5f5f7;color:#111;border:0;border-radius:30px;
+  padding:14px 23px;font-size:13px;font-weight:700;
+  transition:.25s;
+}
+.primary:hover{background:#ccc;transform:translateY(-2px)}
+.text-link{
+  background:none;border:0;color:#aaa;font-size:13px;
+  padding:12px 18px;
+}
+.text-link:hover{color:white}
+.hero-bottom{
+  position:absolute;bottom:35px;left:0;right:0;
+  display:flex;justify-content:space-between;color:#666;
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+}
+.section-head{padding:90px 0 40px}
+.section-head h2{
+  font-size:clamp(40px,6vw,68px);letter-spacing:-3px;
+  margin:0 0 15px;font-weight:600;
+}
+.section-head p{color:var(--muted);font-size:14px;line-height:1.8}
+.essay-list{border-top:1px solid var(--line);margin-bottom:100px}
+.essay-row{
+  display:grid;grid-template-columns:65px 1fr 45px;
+  align-items:center;gap:20px;padding:27px 4px;
+  border-bottom:1px solid var(--line);cursor:pointer;
+  transition:.25s;
+}
+.essay-row:hover{padding-left:14px;background:rgba(255,255,255,.025)}
+.essay-number{font-size:12px;color:#666}
+.essay-title{font-size:clamp(18px,3vw,25px);letter-spacing:-.7px}
+.essay-sub{font-size:11px;color:#777;margin-top:7px}
+.essay-arrow{color:#777;font-size:20px;text-align:right}
+.tag{
+  display:inline-block;border:1px solid #333;border-radius:20px;
+  padding:6px 10px;color:#999;font-size:10px;margin-top:12px;
+}
+.reader{max-width:760px;margin:auto;padding:55px 28px 110px}
+.back{
+  background:none;border:0;color:#888;font-size:12px;
+  padding:10px 0;margin-bottom:45px;
+}
+.back:hover{color:white}
+.reader-top{display:flex;justify-content:space-between;align-items:center}
+.reader h1{
+  font-size:clamp(38px,6vw,62px);line-height:1.1;
+  letter-spacing:-2.5px;margin:25px 0 15px;
+}
+.reader-meta{color:#777;font-size:12px}
+.reader-tools{display:flex;gap:8px;align-items:center}
+.tool{
+  background:#171717;border:1px solid #292929;color:#bbb;
+  border-radius:20px;padding:8px 12px;font-size:11px;
+}
+.tool:hover{color:white;border-color:#666}
+.article{
+  margin-top:55px;font-family:'Playfair Display',Georgia,serif;
+  font-size:19px;line-height:2.05;color:#d0d0d0;
+}
+.article p{margin:0 0 27px}
+.article .quote{
+  margin:38px 0;padding:8px 0 8px 22px;
+  border-left:2px solid #777;color:#f2f2f2;
+  font-size:22px;line-height:1.7;
+}
+.reader-end{border-top:1px solid var(--line);margin-top:60px;padding-top:25px}
+.reader-end p{color:#777;font-size:12px}
+.compare-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:14px;margin:35px 0 100px;
+}
+.compare-card{
+  background:#111;border:1px solid #252525;border-radius:16px;
+  padding:25px;min-height:190px;
+}
+.compare-card h3{font-size:17px;margin:0 0 10px}
+.compare-card p{font-size:12px;color:#888;line-height:1.8}
+.compare-card button{margin-top:12px}
+.empty{
+  text-align:center;padding:100px 20px 140px;color:#777;
+}
+.empty h3{color:#ddd;font-size:24px;font-weight:500}
+.about{
+  max-width:740px;padding:100px 28px 130px;margin:auto;
+}
+.about h2{font-size:clamp(44px,7vw,76px);letter-spacing:-4px;line-height:1.05}
+.about p{color:#aaa;font-size:16px;line-height:2;margin-top:28px}
+.about .big-quote{
+  font-family:'Playfair Display',serif;font-size:27px;
+  color:#eee;line-height:1.7;margin:60px 0;
+}
+footer{border-top:1px solid var(--line);padding:25px 28px}
+.footer-inner{
+  max-width:var(--max);margin:auto;display:flex;
+  justify-content:space-between;color:#666;font-size:10px;
+  letter-spacing:1px;
+}
+.mobile-menu{
+  display:none;position:absolute;top:68px;left:0;right:0;
+  background:#101010;padding:15px 28px 25px;
+  border-bottom:1px solid #292929;
+}
+.mobile-menu.open{display:grid;gap:12px}
+.mobile-menu button{text-align:left;font-size:14px}
+.progress{
+  position:fixed;top:68px;left:0;height:2px;
+  background:#ddd;width:0;z-index:30;transition:width .1s;
+}
+.toast{
+  position:fixed;bottom:25px;left:50%;transform:translate(-50%,20px);
+  background:#eee;color:#111;padding:12px 20px;border-radius:30px;
+  font-size:12px;opacity:0;pointer-events:none;transition:.25s;z-index:50;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){
+  .nav{padding:0 20px}.navlinks{display:none}.menu-btn{display:block}
+  .wrap{padding:0 21px}
+  .hero{min-height:690px}.hero-content{padding:80px 0}
+  .hero h1{letter-spacing:-4px}
+  .hero p{font-size:15px}
+  .hero-bottom{font-size:8px}
+  .section-head{padding:70px 0 32px}
+  .essay-row{grid-template-columns:32px 1fr 20px;gap:12px;padding:23px 0}
+  .essay-sub{font-size:10px}
+  .reader{padding:30px 22px 90px}
+  .reader h1{letter-spacing:-1.5px}
+  .article{font-size:17px;line-height:1.95}
+  .article .quote{font-size:20px}
+  .compare-grid{grid-template-columns:1fr}
+  .about{padding:75px 22px 100px}
+  .about h2{letter-spacing:-2.5px}
+  .footer-inner{gap:15px;flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="#home" onclick="navigate('home')">BİR SÖZÜN <span>İZİNDE.</span></a>
+    <nav class="navlinks">
+      <button data-page="home" onclick="navigate('home')">Ana Sayfa</button>
+      <button data-page="essays" onclick="navigate('essays')">Kompozisyonlar</button>
+      <button data-page="compare" onclick="navigate('compare')">Karşılaştır</button>
+      <button data-page="favorites" onclick="navigate('favorites')">Favoriler</button>
+      <button data-page="about" onclick="navigate('about')">Hakkında</button>
+    </nav>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Menüyü aç">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button onclick="navigate('home')">Ana Sayfa</button>
+    <button onclick="navigate('essays')">Kompozisyonlar</button>
+    <button onclick="navigate('compare')">Karşılaştır</button>
+    <button onclick="navigate('favorites')">Favoriler</button>
+    <button onclick="navigate('about')">Hakkında</button>
+  </div>
+</header>
+<div class="progress" id="progress"></div>
+
+<main>
+  <section class="page active" id="home">
+    <div class="wrap hero">
+      <div class="hero-content">
+        <div class="eyebrow">Bir anı · Bir öğretmen · Bir cümle</div>
+        <h1>Bazen bir söz<br><span>her şeyi değiştirir.</span></h1>
+        <p>
+          İnsan bazen kendine inanmayı unutur.
+          Tam da böyle bir zamanda duyulan birkaç samimi söz,
+          insanın içinde yeniden bir şeyleri başlatabilir.
+        </p>
+        <button class="primary" onclick="navigate('essays')">Hikâyeyi keşfet <span>↗</span></button>
+        <button class="text-link" onclick="navigate('about')">Bu proje hakkında</button>
+      </div>
+      <div class="hero-bottom">
+        <span>Bir Sözün İzinde</span>
+        <span>01 — 05</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="essays">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Yazı koleksiyonu / 2026</div>
+        <h2>Beş farklı anlatım.<br>Tek bir anı.</h2>
+        <p>Aynı hatıranın beş ayrı anlatımı. Her biri farklı bir duyguyu ve bakış açısını öne çıkarıyor.</p>
+      </div>
+      <div class="essay-list" id="essayList"></div>
+    </div>
+  </section>
+
+  <section class="page" id="reader">
+    <article class="reader">
+      <button class="back" onclick="navigate('essays')">← Kompozisyonlara dön</button>
+      <div class="reader-top">
+        <div class="eyebrow" id="readerCategory">ANI YAZISI</div>
+        <div class="reader-tools">
+          <button class="tool" onclick="changeFont(-1)">A−</button>
+          <button class="tool" onclick="changeFont(1)">A+</button>
+          <button class="tool" id="favoriteBtn" onclick="toggleFavorite()">♡</button>
+        </div>
+      </div>
+      <h1 id="readerTitle"></h1>
+      <div class="reader-meta" id="readerMeta"></div>
+      <div class="article" id="articleText"></div>
+      <div class="reader-end">
+        <p>Bir Sözün İzinde · Kişisel anı çalışması</p>
+        <button class="tool" onclick="navigate('essays')">Diğer yazıları incele →</button>
+      </div>
+    </article>
+  </section>
+
+  <section class="page" id="compare">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Editoryal değerlendirme</div>
+        <h2>Hangi anlatım<br>daha güçlü?</h2>
+        <p>Beş yaklaşımı incele. Anlatım biçimlerini karşılaştır ve sana en yakın olanı seç.</p>
+      </div>
+      <div class="compare-grid" id="compareGrid"></div>
+    </div>
+  </section>
+
+  <section class="page" id="favorites">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Kişisel seçkin</div>
+        <h2>Favorilerin.</h2>
+        <p>Beğendiğin kompozisyonları burada saklayabilirsin.</p>
+      </div>
+      <div id="favoriteList"></div>
+    </div>
+  </section>
+
+  <section class="page" id="about">
+    <div class="about">
+      <div class="eyebrow">Projenin hikâyesi</div>
+      <h2>Bir cümle.<br>Bir hatıra.<br>Bir iz.</h2>
+      <p>
+        Bir Sözün İzinde, zor bir dönemden geçen bir öğrencinin
+        hayatında iz bırakan bir öğretmen sözünü anlatan kişisel
+        bir anı çalışmasıdır.
+      </p>
+      <div class="big-quote">
+        “Senin kendinde göremediğin şeyleri ben sende görebiliyorum.
+        Ama önce sen kendine inan.”
+      </div>
+      <p>
+        Bu çalışma, bazen insanın kendisinde göremediği bir umudu
+        başka birinin fark edebileceğini anlatıyor. Çünkü bazı
+        cümleler söylendiği anda bitmez; insanın içinde yaşamaya devam eder.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>BİR SÖZÜN İZİNDE © 2026</span>
+    <span>Bir anının bıraktığı iz.</span>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const quote = "Adem, ben sana inanıyorum. Senin kendinde göremediğin şeyleri ben sende görebiliyorum. Kendine güven, hiçbir zaman kendinden vazgeçme. İleride çok güzel yerlere geleceğine inanıyorum. Ama önce sen kendine inan.";
+
+const essays = [
+{
+ title:"Bana İnanan Birinin Sözü",
+ style:"Duygusal ve samimi",
+ desc:"Bir öğretmenin inancının, insanın kendine bakışını nasıl değiştirebildiğini anlatan içten bir yaklaşım.",
+ paragraphs:[
+ "Hayatımızda bazı anlar vardır. O an yaşanırken sıradan gibi görünür ama zaman geçtikçe bizim için ne kadar önemli olduğunu anlarız. Benim için de böyle anlardan biri, kendime olan güvenimi kaybettiğim bir dönemde öğretmenimden duyduğum birkaç cümleydi.",
+ "O zamanlar kendime pek güvenmiyordum. Gelecekle ilgili düşüncelerim vardı ama bunları gerçekleştirebileceğime inancım azalmıştı. Bazen ne kadar çabalarsam çabalayayım bir şeyleri başaramayacağımı düşünüyordum. Bu yüzden kendi içime kapanmış, beklentilerimi de azaltmıştım.",
+ "Bir gün öğretmenim benimle konuşurken hiç beklemediğim sözler söyledi: “"+quote+"”",
+ "Bu sözleri duyduğumda ne diyeceğimi bilemedim. Çünkü o zamana kadar birinin bana bu kadar içten şekilde inandığını duymamıştım. Öğretmenimin söyledikleri, kendimde göremediğim bazı güzel yönleri fark etmemi sağladı. Belki de ihtiyacım olan şey tam olarak buydu: Birinin bana güvenmesi ve bunu açıkça söylemesi.",
+ "O günden sonra her şey bir anda değişmedi. Yine zorlandığım, kendimden şüphe ettiğim zamanlar oldu. Ancak artık aklımda bana inanan birinin sözleri vardı. Başaramayacağımı düşündüğümde o konuşmayı hatırladım.",
+ "Bugün geriye dönüp baktığımda öğretmenimin o gün söylediklerinin benim için ne kadar değerli olduğunu daha iyi anlıyorum. İnsan bazen kendine olan inancını kaybedebilir. Fakat birinin ona duyduğu güven, yeniden ayağa kalkması için bir başlangıç olabilir. Ben de o gün, önce kendime inanmayı öğrenmem gerektiğini anladım."
+ ]
+},
+{
+ title:"Kendimde Göremediğim Şey",
+ style:"Edebî ve düşünsel",
+ desc:"İnsanın kendisine dışarıdan bakmayı öğrenmesi üzerine daha edebî bir anlatım.",
+ paragraphs:[
+ "İnsan bazen kendisine en uzak kişi hâline gelir. Aynaya baktığında yüzünü görür ama içinde taşıdığı gücü fark edemez. Ben de bir dönem kendime böyle bakıyordum. Yapabileceklerimi değil, yapamayacaklarımı düşünüyordum.",
+ "Geleceğe dair hayallerim tamamen kaybolmamıştı fakat onlara ulaşabileceğime dair inancım zayıflamıştı. Kendimi başkalarıyla kıyaslıyor, eksiklerimi gözümde büyütüyordum. Zamanla bu düşünceler beni sessizleştirdi.",
+ "Tam da böyle bir dönemde öğretmenim bana şu sözleri söyledi: “"+quote+"”",
+ "O an duyduğum şey yalnızca güzel sözlerden ibaret değildi. Öğretmenim, benim kendimde fark edemediğim bir ihtimali görüyordu. Belki de insanın bazen ihtiyacı olan şey, kendisine yeniden bakmasını sağlayacak başka bir gözün varlığıdır.",
+ "Bu konuşmadan sonra kendimi bir anda bambaşka biri olarak görmedim. Ancak düşüncelerimde küçük bir değişiklik başladı. Kendime sürekli eksiklerim üzerinden bakmak yerine, geliştirebileceğim yönlerimi de düşünmeye başladım.",
+ "Şimdi anlıyorum ki insanın hayatında bazı sözler bir kapı açar. O kapıdan geçmek yine insanın kendi çabasına bağlıdır. Öğretmenimin bana duyduğu güven, benim de kendime güvenmeyi denemem için bir başlangıç oldu."
+ ]
+},
+{
+ title:"Bir Cümlenin Bende Bıraktığı İz",
+ style:"İçsel ve düşündürücü",
+ desc:"Bir sözün zaman geçse bile insanın düşüncelerinde nasıl yaşamaya devam ettiğini anlatır.",
+ paragraphs:[
+ "Bazı sözleri duyduğumuz anda unutmayız. Aradan zaman geçse bile hiç beklemediğimiz bir anda yeniden hatırlarız. Çünkü o sözler yalnızca kulağımıza değil, düşüncelerimize de dokunmuştur.",
+ "Benim unutamadığım sözler, kendime güvenimin azaldığı bir dönemde öğretmenimden duyduklarımdır. O sıralar geleceğim hakkında çok fazla düşünüyordum ama düşündüklerimin çoğu umut verici değildi. Kendimi yeterince başarılı görmüyor, bazen hiçbir şeyin değişmeyeceğini sanıyordum.",
+ "Öğretmenim bir gün bana dönerek şöyle dedi: “"+quote+"”",
+ "Bu konuşma benim için beklenmedik bir andı. Çünkü ilk kez biri bana gerçekten inandığını söylüyordu. Üstelik bunu, benim kendimde göremediğim özellikleri fark ettiğini belirterek yapıyordu. O sözlerin neden bu kadar etkili olduğunu sonradan daha iyi anladım.",
+ "Zaman geçti. Hayatımda her şey kolaylaşmadı ve bütün sorunlarım ortadan kalkmadı. Fakat o cümle zihnimde kaldı. Bazen kendimden şüphe ettiğimde onu yeniden hatırladım. Bir insanın bana inanmış olması, benim de kendime bir şans vermem gerektiğini düşündürdü.",
+ "Belki de bir sözün gerçek değeri, söylendiği anda değil, yıllar sonra bile insana ne hissettirdiğinde saklıdır. Öğretmenimin cümleleri bende böyle bir iz bıraktı. Çünkü bana yalnızca güven vermedi; kendime yeniden inanmayı da hatırlattı."
+ ]
+},
+{
+ title:"İlk Kez Birinin Bana İnandığını Duydum",
+ style:"Doğal ve gerçekçi",
+ desc:"Abartıdan uzak, sade ve öğrencinin kendi sesiyle anlatılmış bir anı.",
+ paragraphs:[
+ "Her insanın hayatında unutamadığı bazı konuşmalar vardır. Benim de unutamadığım konuşmalardan biri, kendime pek güvenmediğim bir dönemde öğretmenimle aramda geçti.",
+ "O dönemlerde biraz içime kapanmıştım. Geleceğim hakkında düşünsem de kendime güvenemiyordum. Yapmak istediğim şeyler vardı fakat bunları başarabileceğime inanmıyordum. Bazen insanın en büyük engelinin kendi düşünceleri olduğunu fark edemediği zamanlar oluyor.",
+ "Bir gün öğretmenim benimle konuştu ve bana şöyle dedi: “"+quote+"”",
+ "Açıkçası bu sözleri duyduğumda şaşırdım. Çünkü daha önce kimsenin bana bu şekilde inandığını duymamıştım. Öğretmenimin benim hakkımda böyle düşünmesi beni gerçekten mutlu etti. O zamana kadar kendimde göremediğim şeyleri başka birinin fark etmiş olması benim için önemliydi.",
+ "Bu konuşmadan sonra bir anda bütün düşüncelerim değişmedi. Yine bazen kendime güvenemediğim oldu. Ama artık hatırladığım bir konuşma vardı. Kendimi yetersiz hissettiğim zamanlarda öğretmenimin söyledikleri aklıma geldi.",
+ "Bu anıdan çıkardığım en önemli sonuç, insanın kendisine inanmasının ne kadar önemli olduğudur. Bazen birinin bize güvenmesi, bizim de kendimize güvenmemize yardımcı olur. Öğretmenimin sözlerini bu yüzden hiç unutmadım."
+ ]
+},
+{
+ title:"Önce Kendime İnanmayı Öğrenmek",
+ style:"Olgun ve güçlü",
+ desc:"Özgüven, emek ve geleceğe bakış üzerine kurulu, daha olgun bir sonuçla biten anlatım.",
+ paragraphs:[
+ "Bir insanın kendine olan güvenini kaybetmesi, bazen fark edilmeden gerçekleşir. Önce yapabileceği şeylerden şüphe eder, sonra denemekten uzaklaşır. Ben de bir dönem bu düşüncelerin içinde kaldım.",
+ "Kendimi yeterince başarılı görmüyor, gelecekte istediğim yerlere gelebileceğime inanmıyordum. Aslında hedeflerim vardı fakat onlara ulaşmak için gereken gücü kendimde bulamıyordum. Bu durum zamanla düşüncelerimi ve davranışlarımı etkiledi.",
+ "Bir gün öğretmenim benimle konuştu ve şu cümleleri kurdu: “"+quote+"”",
+ "Öğretmenimin bu sözleri benim için önemliydi. Çünkü bana yalnızca başarılı olacağımı söylemedi; kendimde göremediğim özellikleri fark ettiğini de anlattı. İlk kez biri bana bu kadar açık bir şekilde inandığını söylüyordu. O an, kendime karşı ne kadar haksız davranmış olabileceğimi düşündüm.",
+ "Elbette bir insanın hayatı yalnızca birkaç cümleyle değişmez. Başarmak için çalışmak, hata yapmak ve yeniden denemek gerekir. Ancak bazen bütün bunlara başlayabilmek için küçük bir güven duygusuna ihtiyaç vardır. Benim için o güvenin başlangıcı öğretmenimin sözleri oldu.",
+ "Artık biliyorum ki başkalarının bize inanması değerlidir ama asıl önemli olan, zamanla bizim de kendimize inanmayı öğrenmemizdir. Öğretmenimin o gün söylediği cümleler bana bunu hatırlattı. Belki de o konuşmanın en güzel yanı, geleceğe ilk kez biraz daha umutla bakmamı sağlamasıydı."
+ ]
+}
+];
+
+let currentEssay=0;
+let fontSize=19;
+let favorites=JSON.parse(localStorage.getItem('sozFavoriler')||'[]');
+
+function navigate(page,push=true){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const target=document.getElementById(page);
+  if(!target)return;
+  target.classList.add('active');
+  document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+  document.getElementById('mobileMenu').classList.remove('open');
+  if(push)history.pushState({page},'', '#'+page);
+  window.scrollTo({top:0,behavior:'instant'});
+  if(page==='favorites')renderFavorites();
+  if(page==='compare')renderCompare();
+  if(page==='essays')renderEssays();
+  updateProgress();
+}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+function renderEssays(){
+  document.getElementById('essayList').innerHTML=essays.map((e,i)=>`
+    <div class="essay-row" onclick="openEssay(${i})">
+      <div class="essay-number">0${i+1}</div>
+      <div><div class="essay-title">${e.title}</div><div class="essay-sub">${e.style}</div></div>
+      <div class="essay-arrow">↗</div>
+    </div>`).join('');
+}
+function openEssay(i){
+  currentEssay=i;const e=essays[i];
+  document.getElementById('readerTitle').textContent=e.title;
+  document.getElementById('readerCategory').textContent=e.style.toUpperCase();
+  document.getElementById('readerMeta').textContent='ANI YAZISI  /  0'+(i+1)+' — 05';
+  document.getElementById('articleText').innerHTML=e.paragraphs.map(p=>`<p>${escapeHTML(p)}</p>`).join('');
+  document.getElementById('articleText').style.fontSize=fontSize+'px';
+  updateFavoriteButton();
+  navigate('reader');
+}
+function escapeHTML(s){
+  return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function changeFont(n){
+  fontSize=Math.max(15,Math.min(25,fontSize+n));
+  document.getElementById('articleText').style.fontSize=fontSize+'px';
+}
+function toggleFavorite(){
+  if(favorites.includes(currentEssay))favorites=favorites.filter(x=>x!==currentEssay);
+  else favorites.push(currentEssay);
+  localStorage.setItem('sozFavoriler',JSON.stringify(favorites));
+  updateFavoriteButton();
+  toast(favorites.includes(currentEssay)?'Favorilere eklendi':'Favorilerden çıkarıldı');
+}
+function updateFavoriteButton(){
+  const b=document.getElementById('favoriteBtn');
+  b.textContent=favorites.includes(currentEssay)?'♥':'♡';
+  b.style.color=favorites.includes(currentEssay)?'#fff':'#bbb';
+}
+function renderFavorites(){
+  const el=document.getElementById('favoriteList');
+  if(!favorites.length){
+    el.innerHTML='<div class="empty"><h3>Henüz favorin yok.</h3><p>Beğendiğin yazıları kalp simgesiyle kaydedebilirsin.</p><button class="primary" onclick="navigate(\'essays\')">Yazıları keşfet</button></div>';
+    return;
+  }
+  el.innerHTML='<div class="essay-list">'+favorites.map(i=>`
+    <div class="essay-row" onclick="openEssay(${i})">
+      <div class="essay-number">♡</div>
+      <div><div class="essay-title">${essays[i].title}</div><div class="essay-sub">${essays[i].style}</div></div>
+      <div class="essay-arrow">↗</div>
+    </div>`).join('')+'</div>';
+}
+function renderCompare(){
+  document.getElementById('compareGrid').innerHTML=essays.map((e,i)=>`
+    <div class="compare-card">
+      <div class="eyebrow">YAKLAŞIM 0${i+1}</div>
+      <h3>${e.title}</h3><p>${e.desc}</p>
+      <button class="tool" onclick="openEssay(${i})">Yazıyı oku ↗</button>
+    </div>`).join('');
+}
+function toast(message){
+  const t=document.getElementById('toast');t.textContent=message;t.classList.add('show');
+  clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1900);
+}
+function updateProgress(){
+  const h=document.documentElement;
+  const max=h.scrollHeight-h.clientHeight;
+  document.getElementById('progress').style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+}
+window.addEventListener('scroll',updateProgress);
+window.addEventListener('popstate',()=>{
+  const page=location.hash.replace('#','')||'home';
+  if(document.getElementById(page))navigate(page,false);
+});
+renderEssays();renderCompare();
+if(location.hash&&document.getElementById(location.hash.slice(1)))navigate(location.hash.slice(1),false);
+</script>
+</body>
+</html>
